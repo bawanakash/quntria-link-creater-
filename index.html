@@ -1,123 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Quantria</title>
+<title>Quantria Enhanced</title>
 <style>
-  /* Keep your existing styles here, omitted for brevity */
+  /* Your styles here as previously detailed */
   body {
     background: linear-gradient(135deg, #212121, #282a36 80%);
     font-family: 'Segoe UI', Arial, sans-serif;
-    min-height: 100vh;
     margin: 0;
     color: #fafafa;
-    text-align: center;
   }
-  .logo {
-    margin-top: 30px;
-    margin-bottom: 10px;
-    width: 180px;
-    height: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  .logo { width: 180px; display: block; margin: 30px auto 10px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);}
+  h1 { text-align: center; font-size: 2.5em; letter-spacing: 2px; font-weight: 700; color: #f5d86e; text-shadow: 0 2px 12px #3c1a00; margin-bottom: 18px; }
+  #topbar { position: fixed; top: 10px; right: 15px; color: #eee; font-weight: 600; z-index: 1000; }
+  #topbar span, #topbar a {
+    margin-left: 15px; cursor: pointer; background: linear-gradient(90deg,#f5d86e,#bb81e6 140%);
+    padding: 6px 10px; border-radius: 8px; color: #1a1a1a; text-decoration: none;
   }
-  h1 {
-    font-size: 2.5em;
-    letter-spacing: 2px;
-    font-weight: 700;
-    color: #f5d86e;
-    text-shadow: 0 2px 12px #3c1a00;
-    margin-bottom: 18px;
-  }
-  .input-box, #authContainer {
-    background: #222430;
-    border-radius: 12px;
-    padding: 25px 20px 28px 20px;
-    margin: 0 auto 30px auto;
-    width: 320px;
-    box-shadow: 0 2px 18px #0005;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  #topbar a:hover { background: linear-gradient(90deg,#bb81e6,#f5d86e 140%);}
+  #authContainer, #linkContainer, #adminControls {
+    max-width: 400px; margin: 80px auto 0; background: #222430; border-radius: 12px;
+    padding: 25px 20px; box-shadow: 0 2px 18px #0005; display: flex; flex-direction: column; align-items: center;
   }
   input[type="text"] {
-    width: 95%;
-    padding: 13px;
-    border: none;
-    border-radius: 7px;
-    font-size: 1em;
-    background: #353749;
-    color: #efefef;
-    margin-bottom: 14px;
-    outline: none;
+    width: 95%; padding: 13px; border-radius: 7px; border: none; background: #353749; color: #efefef;
+    font-size: 1em; outline: none; margin-bottom: 15px;
   }
   button {
-    padding: 10px 28px;
-    border: none;
-    border-radius: 7px;
-    font-weight: bold;
-    background: linear-gradient(90deg,#f5d86e,#bb81e6 140%);
-    color: #181628;
-    font-size: 1.1em;
-    box-shadow: 0 2px 6px #bb81e630;
-    cursor: pointer;
-    transition: background 0.3s;
+    font-weight: bold; color: #181628; font-size: 1.1em; border: none; border-radius: 7px;
+    padding: 10px 28px; background: linear-gradient(90deg,#f5d86e,#bb81e6 140%);
+    box-shadow: 0 2px 6px #bb81e630; cursor: pointer; transition: 0.3s background;
   }
   button:hover {
-    background: linear-gradient(90deg,#bb81e6,#f5d86e 110%);
-    color:#3c1a00;
+    background: linear-gradient(90deg,#bb81e6,#f5d86e 140%); color: #1a1a1a;
   }
   #loading, #successMsg {
-    display: none;
-    font-weight: bold;
-    margin-top: 9px;
+    margin-top: 10px; font-weight: bold; text-align: center;
   }
-  #loading { color: #6ee7b7; }
-  #successMsg { color: #81e6e1; }
-  #linksList {
-    max-width: 430px;
-    margin: 20px auto 0 auto;
-    text-align: left;
-    background: #242837;
-    border-radius: 12px;
-    padding: 18px;
-    box-shadow: 0 1px 10px #bb81e640;
-  }
-  .link-entry {
-    margin-bottom: 14px;
-  }
+  #loading { color: #6ee7b7; display: none; }
+  #successMsg { color: #81e6e1; display: none; }
+  #linksList { margin-top: 25px; width: 100%; text-align: left; }
+  .link-entry { margin-bottom: 12px; }
   .link-entry a {
-    color: #bb81e6;
-    font-weight: 600;
-    font-size: 1.05em;
-    text-decoration: none;
+    font-weight: 600; color: #bb81e6; text-decoration: none; font-size: 1.05em;
   }
   .link-entry a:hover {
-    color: #f5d86e;
-    text-shadow: 0 2px 15px #f5d86e80;
+    color: #f5d86e; text-shadow: 0 2px 15px #f5d86e80;
   }
-  .uploader {
-    font-size: 0.8em;
-    color: #ccc;
-  }
+  .uploader { font-size: 0.8em; color: #ccc; }
   .delete-btn {
-    margin-left: 10px;
-    padding: 3px 8px;
-    font-size: 0.8em;
-    color: #fff;
-    background: #e33;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    margin-left: 10px; padding: 4px 9px; background: #e33; border-radius: 6px;
+    font-size: 0.8em; color: white; cursor: pointer; border: none;
   }
-  #adminBtn {
-    margin-bottom: 20px;
-    background: #aa0066;
+  #adminControls { display: none; max-width: 700px; margin: 20px auto; padding: 20px; background: #242837; box-shadow: 0 1px 10px #bb81e640; border-radius: 12px; }
+  #adminLinksList table {
+    width: 100%; border-collapse: collapse; color: white; font-size: 0.95em;
   }
-  @media (max-width: 600px) {
-    .input-box, #linksList, #authContainer { width: 95%; padding: 10px;}
-    .logo { width: 120px;}
-  }
+  #adminLinksList thead tr { border-bottom: 2px solid #bb81e6; }
+  #adminLinksList th, #adminLinksList td { padding: 10px 8px; text-align: left; }
+  #adminLinksList tr:hover { background: #3b3479; }
 </style>
 </head>
 <body>
@@ -125,30 +68,38 @@
 <img src="30904b7b-84ba-4cf2-96ad-30e65b7f0369.jpg" alt="Quantria Logo" class="logo" />
 <h1>Quantria</h1>
 
+<div id="topbar" style="display:none;">
+  <span id="userLabel"></span>
+  <a href="javascript:void(0)" id="enterAdminBtn">Enter as Admin</a>
+  <a href="javascript:void(0)" id="exitAdminBtn" style="display:none;">Exit Admin</a>
+  <a href="javascript:void(0)" id="logoutBtn" style="display:none;">Logout</a>
+</div>
+
 <div id="authContainer" class="input-box">
   <button id="loginBtn" onclick="login()">Login with Google</button>
-  <button id="logoutBtn" onclick="logout()" style="display:none;">Logout</button>
   <div id="loginStatus">Not logged in</div>
 </div>
 
-<div id="linkContainer" style="display:none;">
-  <div class="input-box">
-    <input type="text" id="linkInput" placeholder="Text, https://your-link.com" />
-    <button onclick="addLink()">Add Link</button>
-    <div id="loading">Loading...</div>
-    <div id="successMsg">Added successfully!</div>
-  </div>
+<div id="linkContainer" class="input-box" style="display:none;">
+  <input type="text" id="linkInput" placeholder="e.g. Text, https://example.com or just https://example.com" />
+  <button onclick="addLink()">Add Link</button>
+  <div id="loading">Loading...</div>
+  <div id="successMsg">Added successfully!</div>
+
+  <div id="linksList"></div>
 </div>
 
-<button id="adminBtn" onclick="adminLogin()">Admin Login (Delete Any Link)</button>
-
-<div id="linksList"></div>
+<div id="adminControls">
+  <h2>Admin Dashboard - Manage All Links</h2>
+  <div id="adminLinksList"></div>
+</div>
 
 <script type="module">
-  // Import Firebase Modular SDK
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
   import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+  import {
+    getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBEY7gfueMhxhwz_j9WgRTA9qvzVxmoXBE",
@@ -160,108 +111,153 @@
     measurementId: "G-KYBMBZJ9FQ"
   };
 
+  const ADMIN_PASS = "156";
+  let isAdmin = false;
+  let currentUser = null;
+
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
   const provider = new GoogleAuthProvider();
 
-  const ADMIN_PASS = "156";
-  let isAdmin = false;
-  let currentUser = null;
-
-  const loginBtn = document.getElementById('loginBtn');
+  // Elements
+  const topbar = document.getElementById('topbar');
+  const userLabel = document.getElementById('userLabel');
+  const enterAdminBtn = document.getElementById('enterAdminBtn');
+  const exitAdminBtn = document.getElementById('exitAdminBtn');
   const logoutBtn = document.getElementById('logoutBtn');
+
+  const authContainer = document.getElementById('authContainer');
+  const loginBtn = document.getElementById('loginBtn');
   const loginStatus = document.getElementById('loginStatus');
+
   const linkContainer = document.getElementById('linkContainer');
-  const adminBtn = document.getElementById('adminBtn');
-  const linksList = document.getElementById('linksList');
+  const linkInput = document.getElementById('linkInput');
   const loading = document.getElementById('loading');
   const successMsg = document.getElementById('successMsg');
+  const linksList = document.getElementById('linksList');
+
+  const adminControls = document.getElementById('adminControls');
+  const adminLinksList = document.getElementById('adminLinksList');
+
+  // Update UI based on auth state
+  function updateUI() {
+    if (currentUser) {
+      userLabel.textContent = `Hello, ${currentUser.displayName}`;
+      topbar.style.display = 'block';
+      authContainer.style.display = 'none';
+      logoutBtn.style.display = 'inline-block';
+      linkContainer.style.display = 'block';
+      loginStatus.textContent = '';
+      enterAdminBtn.style.display = 'inline-block';
+      exitAdminBtn.style.display = 'none';
+      adminControls.style.display = 'none';
+    } else {
+      topbar.style.display = 'none';
+      authContainer.style.display = 'block';
+      logoutBtn.style.display = 'none';
+      linkContainer.style.display = 'none';
+      loginStatus.textContent = 'Not logged in';
+      adminControls.style.display = 'none';
+    }
+  }
 
   onAuthStateChanged(auth, user => {
     currentUser = user;
-    if(user){
-      loginStatus.textContent = `Logged in as: ${user.displayName}`;
-      loginBtn.style.display = 'none';
-      logoutBtn.style.display = 'inline-block';
-      linkContainer.style.display = 'block';
-      loadLinks();
-    } else {
-      loginStatus.textContent = 'Not logged in';
-      loginBtn.style.display = 'inline-block';
-      logoutBtn.style.display = 'none';
-      linkContainer.style.display = 'none';
-      linksList.innerHTML = '';
-    }
+    isAdmin = false; // reset admin on new sign in
+    updateUI();
+    if (user) loadLinks();
   });
 
-  export async function login() {
+  // Login with Google
+  async function login() {
     try {
       await signInWithPopup(auth, provider);
-    } catch (error) {
-      alert(`Login failed: ${error.message}`);
+    } catch (err) {
+      alert('Login failed: ' + err.message);
     }
   }
 
-  export function logout() {
+  // Logout user
+  function logout() {
     signOut(auth);
     isAdmin = false;
+    updateUI();
   }
 
-  export async function addLink() {
-    if(!currentUser) {
-      alert('Please login first');
-      return;
-    }
-    const val = document.getElementById('linkInput').value.trim();
-    if(!val) {
-      alert('Enter text and URL separated by a comma.');
-      return;
-    }
-    const parts = val.split(',');
-    if(parts.length < 2) {
-      alert('Enter both text and URL separated by a comma.');
-      return;
-    }
-    const text = parts[0].trim();
-    const url = parts[1].trim();
+  // Add Link with flexible text, URL input
+  async function addLink() {
+    if (!currentUser) return alert('Please login first');
+    let val = linkInput.value.trim();
+    if (!val) return alert("Enter e.g. 'Text, https://example.com' or just 'https://example.com'");
 
-    if(!/^https?:\/\/.+/.test(url)) {
-      alert('Enter valid URL starting with http or https');
+    // Auto-prepend https:// or www. if missing
+    if (!val.match(/^https?:\/\//)) {
+      if (val.match(/^www\./)) {
+        val = 'https://' + val;
+      } else if (val.indexOf(',') === -1) {
+        val = 'https://www.' + val;
+      }
+    }
+
+    let text = '', url = '';
+
+    const parts = val.split(',');
+    if (parts.length === 1) {
+      url = parts[0].trim();
+      text = url;
+    } else {
+      text = parts.slice(0, parts.length - 1).join(',').trim();
+      url = parts[parts.length - 1].trim();
+    }
+
+    if (!/^https?:\/\/.+/.test(url)) {
+      alert('Please enter a valid URL starting with http or https');
       return;
     }
+
+    if (!text) text = url;
+
     loading.style.display = 'block';
     try {
       await addDoc(collection(db, "links"), {
-        text: text,
-        url: url,
+        text,
+        url,
         uid: currentUser.uid,
         username: currentUser.displayName,
         timestamp: serverTimestamp()
       });
       successMsg.style.display = 'block';
-      document.getElementById('linkInput').value = '';
-      await loadLinks();
-    } catch (error) {
-      alert(`Error adding link: ${error.message}`);
+      linkInput.value = '';
+      loadLinks();
+    } catch (err) {
+      alert('Error adding link: ' + err.message);
     } finally {
       loading.style.display = 'none';
-      setTimeout(() => { successMsg.style.display = 'none'; }, 2500);
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 3000);
     }
   }
 
+  // Load links for normal users and admin
   async function loadLinks() {
     linksList.innerHTML = '';
+    adminLinksList.innerHTML = '';
+
     const q = query(collection(db, "links"), orderBy("timestamp", "desc"));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(docSnap => {
+    const snapshot = await getDocs(q);
+
+    snapshot.forEach(docSnap => {
       const data = docSnap.data();
       const docId = docSnap.id;
+
+      // User view
       const div = document.createElement('div');
       div.className = 'link-entry';
-      div.innerHTML = `<a href="${data.url}" target="_blank">${data.text}</a><div class="uploader">Uploaded by: ${data.username || 'Unknown'}</div>`;
+      div.innerHTML = `<a href="${data.url}" target="_blank">${data.text}</a><div class="uploader">Uploaded by: ${data.username}</div>`;
 
-      if(currentUser && (currentUser.uid === data.uid || isAdmin)) {
+      if (currentUser && (currentUser.uid === data.uid || isAdmin)) {
         const delBtn = document.createElement('button');
         delBtn.className = 'delete-btn';
         delBtn.textContent = 'Delete';
@@ -269,31 +265,75 @@
           try {
             await deleteDoc(doc(db, "links", docId));
             loadLinks();
-          } catch (error) {
-            alert(`Error deleting link: ${error.message}`);
+          } catch (err) {
+            alert('Error deleting link: ' + err.message);
           }
         };
         div.appendChild(delBtn);
       }
+
       linksList.appendChild(div);
+
+      // Admin view
+      if (isAdmin) {
+        if (!adminLinksList.querySelector('table')) {
+          let table = document.createElement('table');
+          table.innerHTML = `<thead><tr><th>Text</th><th>URL</th><th>Uploaded By</th><th>Action</th></tr></thead><tbody id="adminLinksTbody"></tbody>`;
+          adminLinksList.appendChild(table);
+        }
+        const tbody = document.getElementById('adminLinksTbody');
+        if (tbody) {
+          let row = document.createElement('tr');
+          row.innerHTML = `<td>${data.text}</td><td><a href="${data.url}" target="_blank">${data.url}</a></td><td>${data.username}</td><td><button class="delete-btn">Delete</button></td>`;
+          row.querySelector('button').onclick = async () => {
+            try {
+              await deleteDoc(doc(db, "links", docId));
+              loadLinks();
+            } catch (err) {
+              alert('Error deleting link: ' + err.message);
+            }
+          };
+          tbody.appendChild(row);
+        }
+      }
     });
   }
 
-  function adminLogin(){
+  // Enter admin mode
+  function adminLogin() {
     const pass = prompt('Enter admin password:');
-    if(pass === ADMIN_PASS){
+    if (pass === ADMIN_PASS) {
       isAdmin = true;
-      alert('Admin access granted. You may now delete any link.');
+      alert('Admin mode enabled');
+      adminControls.style.display = 'block';
+      linkContainer.style.display = 'none';
+      enterAdminBtn.style.display = 'none';
+      exitAdminBtn.style.display = 'inline-block';
       loadLinks();
     } else {
       alert('Incorrect password.');
     }
   }
 
+  // Exit admin mode
+  function exitAdminMode() {
+    isAdmin = false;
+    alert('Admin mode disabled');
+    adminControls.style.display = 'none';
+    linkContainer.style.display = 'block';
+    enterAdminBtn.style.display = 'inline-block';
+    exitAdminBtn.style.display = 'none';
+    loadLinks();
+  }
+
+  // Hook event handlers
+  enterAdminBtn.onclick = adminLogin;
+  exitAdminBtn.onclick = exitAdminMode;
+  logoutBtn.onclick = logout;
+
   window.login = login;
   window.logout = logout;
   window.addLink = addLink;
-  window.adminLogin = adminLogin;
 </script>
 
 </body>
