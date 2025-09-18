@@ -3,64 +3,158 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Quantria Enhanced</title>
+<title>Quantria Full Featured</title>
 <style>
-  /* Your styles here as previously detailed */
   body {
     background: linear-gradient(135deg, #212121, #282a36 80%);
-    font-family: 'Segoe UI', Arial, sans-serif;
-    margin: 0;
     color: #fafafa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0; padding: 0;
+    text-align: center;
   }
-  .logo { width: 180px; display: block; margin: 30px auto 10px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);}
-  h1 { text-align: center; font-size: 2.5em; letter-spacing: 2px; font-weight: 700; color: #f5d86e; text-shadow: 0 2px 12px #3c1a00; margin-bottom: 18px; }
-  #topbar { position: fixed; top: 10px; right: 15px; color: #eee; font-weight: 600; z-index: 1000; }
+  .logo {
+    width: 180px;
+    margin:30px auto 10px;
+    display:block;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+  h1 {
+    color: #f5d86e;
+    text-shadow: 0 2px 12px #3c1a00;
+    letter-spacing: 1.8px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  #topbar {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    padding: 10px 15px;
+    background: rgba(27, 28, 40, 0.85);
+    border-radius: 10px;
+    z-index: 100;
+  }
   #topbar span, #topbar a {
-    margin-left: 15px; cursor: pointer; background: linear-gradient(90deg,#f5d86e,#bb81e6 140%);
-    padding: 6px 10px; border-radius: 8px; color: #1a1a1a; text-decoration: none;
+    margin-left: 12px;
+    cursor: pointer;
+    background: linear-gradient(90deg,#f5d86e,#bb81e6);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #222;
+    text-decoration: none;
   }
-  #topbar a:hover { background: linear-gradient(90deg,#bb81e6,#f5d86e 140%);}
+  #topbar a:hover {
+    background: linear-gradient(90deg,#bb81e6,#f5d86e);
+  }
   #authContainer, #linkContainer, #adminControls {
-    max-width: 400px; margin: 80px auto 0; background: #222430; border-radius: 12px;
-    padding: 25px 20px; box-shadow: 0 2px 18px #0005; display: flex; flex-direction: column; align-items: center;
+    max-width: 420px;
+    margin: 100px auto 30px auto;
+    background: #222430;
+    border-radius: 12px;
+    padding: 25px 20px;
+    box-shadow: 0 2px 18px #0005;
   }
-  input[type="text"] {
-    width: 95%; padding: 13px; border-radius: 7px; border: none; background: #353749; color: #efefef;
-    font-size: 1em; outline: none; margin-bottom: 15px;
+  input[type=text] {
+    width: 95%;
+    padding: 12px;
+    margin-bottom: 18px;
+    font-size: 1em;
+    border: none;
+    border-radius: 7px;
+    background: #353749;
+    color: #eee;
+    outline: none;
   }
   button {
-    font-weight: bold; color: #181628; font-size: 1.1em; border: none; border-radius: 7px;
-    padding: 10px 28px; background: linear-gradient(90deg,#f5d86e,#bb81e6 140%);
-    box-shadow: 0 2px 6px #bb81e630; cursor: pointer; transition: 0.3s background;
+    cursor: pointer;
+    border-radius: 7px;
+    border: none;
+    padding: 11px 28px;
+    font-weight: 700;
+    font-size: 1.1em;
+    color: #222;
+    background: linear-gradient(90deg,#f5d86e,#bb81e6);
+    box-shadow: 0 3px 9px #bb81e630;
+    transition: 0.3s background ease;
   }
   button:hover {
-    background: linear-gradient(90deg,#bb81e6,#f5d86e 140%); color: #1a1a1a;
+    background: linear-gradient(90deg,#bb81e6,#f5d86e);
+    color: #1a1a1a;
   }
   #loading, #successMsg {
-    margin-top: 10px; font-weight: bold; text-align: center;
+    margin-top: 12px;
+    font-weight: 700;
+    text-align: center;
   }
-  #loading { color: #6ee7b7; display: none; }
-  #successMsg { color: #81e6e1; display: none; }
-  #linksList { margin-top: 25px; width: 100%; text-align: left; }
-  .link-entry { margin-bottom: 12px; }
+  #loading {
+    color: #6ee7b7;
+    display: none;
+  }
+  #successMsg {
+    color: #81e6e1;
+    display: none;
+  }
+  #linksList {
+    margin-top: 20px;
+    text-align: left;
+  }
+  .link-entry {
+    margin-bottom: 12px;
+  }
   .link-entry a {
-    font-weight: 600; color: #bb81e6; text-decoration: none; font-size: 1.05em;
+    font-weight: 700;
+    font-size: 1.04em;
+    color: #bb81e6;
+    text-decoration: none;
   }
   .link-entry a:hover {
-    color: #f5d86e; text-shadow: 0 2px 15px #f5d86e80;
+    color: #f5d86e;
+    text-shadow: 0 2px 15px #f5d86e80;
   }
-  .uploader { font-size: 0.8em; color: #ccc; }
+  .uploader {
+    font-size: 0.78em;
+    color: #ccc;
+  }
   .delete-btn {
-    margin-left: 10px; padding: 4px 9px; background: #e33; border-radius: 6px;
-    font-size: 0.8em; color: white; cursor: pointer; border: none;
+    margin-left: 10px;
+    padding: 3px 7px;
+    border-radius: 4px;
+    border: none;
+    background: #dc2020;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
   }
-  #adminControls { display: none; max-width: 700px; margin: 20px auto; padding: 20px; background: #242837; box-shadow: 0 1px 10px #bb81e640; border-radius: 12px; }
+  #adminControls {
+    display: none;
+    max-width: 720px;
+    margin: 30px auto;
+    background: #242837;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 0 15px #bb81e670;
+  }
   #adminLinksList table {
-    width: 100%; border-collapse: collapse; color: white; font-size: 0.95em;
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
   }
-  #adminLinksList thead tr { border-bottom: 2px solid #bb81e6; }
-  #adminLinksList th, #adminLinksList td { padding: 10px 8px; text-align: left; }
-  #adminLinksList tr:hover { background: #3b3479; }
+  #adminLinksList th, #adminLinksList td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid #555;
+  }
+  #adminLinksList tr:hover {
+    background: #3b3479;
+  }
+  #loadMoreBtn {
+    margin-top: 25px;
+    background: #bb81e6;
+    color: #181628;
+    font-weight: 700;
+  }
 </style>
 </head>
 <body>
@@ -72,25 +166,30 @@
   <span id="userLabel"></span>
   <a href="javascript:void(0)" id="enterAdminBtn">Enter as Admin</a>
   <a href="javascript:void(0)" id="exitAdminBtn" style="display:none;">Exit Admin</a>
+  <a href="javascript:void(0)" id="darkModeToggle">Toggle Dark Mode</a>
   <a href="javascript:void(0)" id="logoutBtn" style="display:none;">Logout</a>
 </div>
 
-<div id="authContainer" class="input-box">
-  <button id="loginBtn" onclick="login()">Login with Google</button>
+<div id="authContainer">
+  <button id="loginBtn">Login with Google</button>
   <div id="loginStatus">Not logged in</div>
 </div>
 
-<div id="linkContainer" class="input-box" style="display:none;">
-  <input type="text" id="linkInput" placeholder="e.g. Text, https://example.com or just https://example.com" />
-  <button onclick="addLink()">Add Link</button>
+<div id="linkContainer" style="display:none;">
+  <input type="text" id="linkInput" placeholder="Text, URL or URL only" />
+  <button id="addLinkBtn">Add Link</button>
+  <button id="searchClearBtn" style="display:none;">Clear Search</button>
+  <input type="text" id="searchInput" placeholder="Search by text or user" style="margin-top:12px; display:block; width:95%;"/>
   <div id="loading">Loading...</div>
   <div id="successMsg">Added successfully!</div>
 
   <div id="linksList"></div>
+  <button id="loadMoreBtn" style="display:none;">Load More</button>
 </div>
 
-<div id="adminControls">
-  <h2>Admin Dashboard - Manage All Links</h2>
+<div id="adminControls" style="display:none;">
+  <h2>Admin Dashboard</h2>
+  <button id="exportBtn">Export as CSV</button>
   <div id="adminLinksList"></div>
 </div>
 
@@ -98,7 +197,8 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
   import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
   import {
-    getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, serverTimestamp
+    getFirestore, collection, addDoc, query, orderBy, limit,
+    getDocs, deleteDoc, doc, serverTimestamp, startAfter, updateDoc
   } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -112,35 +212,44 @@
   };
 
   const ADMIN_PASS = "156";
+  const PAGE_SIZE = 50;
   let isAdmin = false;
   let currentUser = null;
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const provider = new GoogleAuthProvider();
+  let lastVisibleDoc = null;
 
   // Elements
-  const topbar = document.getElementById('topbar');
-  const userLabel = document.getElementById('userLabel');
-  const enterAdminBtn = document.getElementById('enterAdminBtn');
-  const exitAdminBtn = document.getElementById('exitAdminBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
-
   const authContainer = document.getElementById('authContainer');
   const loginBtn = document.getElementById('loginBtn');
   const loginStatus = document.getElementById('loginStatus');
 
   const linkContainer = document.getElementById('linkContainer');
   const linkInput = document.getElementById('linkInput');
+  const addLinkBtn = document.getElementById('addLinkBtn');
   const loading = document.getElementById('loading');
   const successMsg = document.getElementById('successMsg');
   const linksList = document.getElementById('linksList');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
 
   const adminControls = document.getElementById('adminControls');
   const adminLinksList = document.getElementById('adminLinksList');
+  const exportBtn = document.getElementById('exportBtn');
 
-  // Update UI based on auth state
+  const topbar = document.getElementById('topbar');
+  const userLabel = document.getElementById('userLabel');
+  const enterAdminBtn = document.getElementById('enterAdminBtn');
+  const exitAdminBtn = document.getElementById('exitAdminBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const searchInput = document.getElementById('searchInput');
+  const searchClearBtn = document.getElementById('searchClearBtn');
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const provider = new GoogleAuthProvider();
+
+  // UI Updates
   function updateUI() {
     if (currentUser) {
       userLabel.textContent = `Hello, ${currentUser.displayName}`;
@@ -152,188 +261,256 @@
       enterAdminBtn.style.display = 'inline-block';
       exitAdminBtn.style.display = 'none';
       adminControls.style.display = 'none';
+      loadMoreBtn.style.display = 'none';
+      searchClearBtn.style.display = 'none';
+      searchInput.value = '';
     } else {
+      userLabel.textContent = '';
       topbar.style.display = 'none';
       authContainer.style.display = 'block';
       logoutBtn.style.display = 'none';
       linkContainer.style.display = 'none';
       loginStatus.textContent = 'Not logged in';
       adminControls.style.display = 'none';
+      loadMoreBtn.style.display = 'none';
+      searchClearBtn.style.display = 'none';
+      searchInput.value = '';
     }
   }
 
+  // Listen for auth state changes
   onAuthStateChanged(auth, user => {
     currentUser = user;
-    isAdmin = false; // reset admin on new sign in
+    isAdmin = false;
     updateUI();
     if (user) loadLinks();
   });
 
-  // Login with Google
+  // Login handler
   async function login() {
     try {
       await signInWithPopup(auth, provider);
     } catch (err) {
-      alert('Login failed: ' + err.message);
+      alert("Login failed: " + err.message);
     }
   }
 
-  // Logout user
+  // Logout handler
   function logout() {
     signOut(auth);
     isAdmin = false;
     updateUI();
   }
 
-  // Add Link with flexible text, URL input
-  async function addLink() {
-    if (!currentUser) return alert('Please login first');
-    let val = linkInput.value.trim();
-    if (!val) return alert("Enter e.g. 'Text, https://example.com' or just 'https://example.com'");
+  // Parse input string for text and URL
+  function parseLinkInput(inputStr) {
+    let text = "",
+      url = "";
 
-    // Auto-prepend https:// or www. if missing
-    if (!val.match(/^https?:\/\//)) {
-      if (val.match(/^www\./)) {
-        val = 'https://' + val;
-      } else if (val.indexOf(',') === -1) {
-        val = 'https://www.' + val;
+    if (!inputStr.match(/^https?:\/\//)) {
+      if (inputStr.match(/^www\./)) {
+        inputStr = "https://" + inputStr;
+      } else if (inputStr.indexOf(",") === -1) {
+        inputStr = "https://www." + inputStr;
       }
     }
 
-    let text = '', url = '';
-
-    const parts = val.split(',');
+    const parts = inputStr.split(",");
     if (parts.length === 1) {
       url = parts[0].trim();
       text = url;
     } else {
-      text = parts.slice(0, parts.length - 1).join(',').trim();
+      text = parts.slice(0, parts.length - 1).join(",").trim();
       url = parts[parts.length - 1].trim();
     }
+    if (!url.match(/^https?:\/\/.+/)) {
+      url = "";
+    }
+    return {
+      text,
+      url
+    };
+  }
 
-    if (!/^https?:\/\/.+/.test(url)) {
-      alert('Please enter a valid URL starting with http or https');
+  // Add link handler
+  async function addLink() {
+    if (!currentUser) {
+      alert("Please login first");
       return;
     }
 
-    if (!text) text = url;
+    let val = linkInput.value.trim();
+    if (!val) {
+      alert("Enter 'Text, URL' or 'URL' only");
+      return;
+    }
 
-    loading.style.display = 'block';
+    const parsed = parseLinkInput(val);
+    if (!parsed.url) {
+      alert("Please enter a valid URL");
+      return;
+    }
+
+    loading.style.display = "block";
+
     try {
       await addDoc(collection(db, "links"), {
-        text,
-        url,
+        text: parsed.text,
+        url: parsed.url,
         uid: currentUser.uid,
         username: currentUser.displayName,
         timestamp: serverTimestamp()
       });
-      successMsg.style.display = 'block';
-      linkInput.value = '';
+      successMsg.style.display = "block";
+      linkInput.value = "";
+      lastVisibleDoc = null;
       loadLinks();
     } catch (err) {
-      alert('Error adding link: ' + err.message);
+      alert("Error adding link: " + err.message);
     } finally {
-      loading.style.display = 'none';
-      setTimeout(() => {
-        successMsg.style.display = 'none';
-      }, 3000);
+      loading.style.display = "none";
+      setTimeout(() => (successMsg.style.display = "none"), 3000);
     }
   }
 
-  // Load links for normal users and admin
-  async function loadLinks() {
-    linksList.innerHTML = '';
-    adminLinksList.innerHTML = '';
+  // Pagination draft variable
+  let lastVisibleDoc = null;
+  const PAGE_SIZE = 50;
 
-    const q = query(collection(db, "links"), orderBy("timestamp", "desc"));
+  // Load links with pagination
+  async function loadLinks(paginate = false) {
+    if (!paginate) {
+      linksList.innerHTML = "";
+      lastVisibleDoc = null;
+      loadMoreBtn.style.display = "none";
+    }
+
+    let q;
+    if (lastVisibleDoc) {
+      q = query(
+        collection(db, "links"),
+        orderBy("timestamp", "desc"),
+        startAfter(lastVisibleDoc),
+        limit(PAGE_SIZE)
+      );
+    } else {
+      q = query(collection(db, "links"), orderBy("timestamp", "desc"), limit(PAGE_SIZE));
+    }
+
     const snapshot = await getDocs(q);
+    if (snapshot.empty && !lastVisibleDoc) {
+      linksList.innerHTML = "<p>No links yet.</p>";
+      return;
+    }
+    lastVisibleDoc = snapshot.docs[snapshot.docs.length - 1];
 
-    snapshot.forEach(docSnap => {
+    snapshot.forEach((docSnap) => {
       const data = docSnap.data();
       const docId = docSnap.id;
 
-      // User view
-      const div = document.createElement('div');
-      div.className = 'link-entry';
+      const div = document.createElement("div");
+      div.className = "link-entry";
       div.innerHTML = `<a href="${data.url}" target="_blank">${data.text}</a><div class="uploader">Uploaded by: ${data.username}</div>`;
 
       if (currentUser && (currentUser.uid === data.uid || isAdmin)) {
-        const delBtn = document.createElement('button');
-        delBtn.className = 'delete-btn';
-        delBtn.textContent = 'Delete';
+        const delBtn = document.createElement("button");
+        delBtn.className = "delete-btn";
+        delBtn.textContent = "Delete";
         delBtn.onclick = async () => {
           try {
             await deleteDoc(doc(db, "links", docId));
+            lastVisibleDoc = null;
             loadLinks();
           } catch (err) {
-            alert('Error deleting link: ' + err.message);
+            alert("Error deleting link: " + err.message);
           }
         };
         div.appendChild(delBtn);
       }
-
       linksList.appendChild(div);
-
-      // Admin view
-      if (isAdmin) {
-        if (!adminLinksList.querySelector('table')) {
-          let table = document.createElement('table');
-          table.innerHTML = `<thead><tr><th>Text</th><th>URL</th><th>Uploaded By</th><th>Action</th></tr></thead><tbody id="adminLinksTbody"></tbody>`;
-          adminLinksList.appendChild(table);
-        }
-        const tbody = document.getElementById('adminLinksTbody');
-        if (tbody) {
-          let row = document.createElement('tr');
-          row.innerHTML = `<td>${data.text}</td><td><a href="${data.url}" target="_blank">${data.url}</a></td><td>${data.username}</td><td><button class="delete-btn">Delete</button></td>`;
-          row.querySelector('button').onclick = async () => {
-            try {
-              await deleteDoc(doc(db, "links", docId));
-              loadLinks();
-            } catch (err) {
-              alert('Error deleting link: ' + err.message);
-            }
-          };
-          tbody.appendChild(row);
-        }
-      }
     });
+
+    loadMoreBtn.style.display = snapshot.size === PAGE_SIZE ? "block" : "none";
   }
 
-  // Enter admin mode
+  // Admin mode handlers
   function adminLogin() {
-    const pass = prompt('Enter admin password:');
+    const pass = prompt("Enter admin password:");
     if (pass === ADMIN_PASS) {
       isAdmin = true;
-      alert('Admin mode enabled');
-      adminControls.style.display = 'block';
-      linkContainer.style.display = 'none';
-      enterAdminBtn.style.display = 'none';
-      exitAdminBtn.style.display = 'inline-block';
+      alert("Admin mode enabled");
+      adminControls.style.display = "block";
+      linkContainer.style.display = "none";
+      enterAdminBtn.style.display = "none";
+      exitAdminBtn.style.display = "inline-block";
       loadLinks();
     } else {
-      alert('Incorrect password.');
+      alert("Incorrect password.");
     }
   }
-
-  // Exit admin mode
   function exitAdminMode() {
     isAdmin = false;
-    alert('Admin mode disabled');
-    adminControls.style.display = 'none';
-    linkContainer.style.display = 'block';
-    enterAdminBtn.style.display = 'inline-block';
-    exitAdminBtn.style.display = 'none';
+    alert("Admin mode disabled");
+    adminControls.style.display = "none";
+    linkContainer.style.display = "block";
+    enterAdminBtn.style.display = "inline-block";
+    exitAdminBtn.style.display = "none";
     loadLinks();
   }
 
-  // Hook event handlers
+  // Export CSV function
+  async function exportLinksCSV() {
+    const snapshot = await getDocs(collection(db, "links"));
+    if (snapshot.empty) {
+      alert("No links to export.");
+      return;
+    }
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Text,URL,Uploaded By\n";
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      const row = `"${data.text.replace(/"/g, '""')}","${data.url}","${data.username}"\n`;
+      csvContent += row;
+    });
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "quantria_links.csv");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
   enterAdminBtn.onclick = adminLogin;
   exitAdminBtn.onclick = exitAdminMode;
   logoutBtn.onclick = logout;
+  loginBtn.onclick = login;
+  addLinkBtn.onclick = addLink;
+  loadMoreBtn.onclick = () => loadLinks(true);
+  exportBtn.onclick = exportLinksCSV;
+  darkModeToggle.onclick = () => document.body.classList.toggle("dark");
 
-  window.login = login;
-  window.logout = logout;
-  window.addLink = addLink;
+  // Optional: Search/filter links by text or username
+  searchInput.oninput = () => {
+    const keyword = searchInput.value.toLowerCase().trim();
+    if (!keyword) {
+      searchClearBtn.style.display = "none";
+      Array.from(linksList.children).forEach(div => div.style.display = "block");
+      return;
+    }
+    searchClearBtn.style.display = "inline-block";
+    Array.from(linksList.children).forEach(div => {
+      const text = div.textContent.toLowerCase();
+      div.style.display = text.includes(keyword) ? "block" : "none";
+    });
+  };
+
+  searchClearBtn.onclick = () => {
+    searchInput.value = "";
+    searchClearBtn.style.display = "none";
+    Array.from(linksList.children).forEach(div => div.style.display = "block");
+  };
+
 </script>
 
 </body>
