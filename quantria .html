@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quantria</title>
+<style>
+  /* Keep your existing styles here, omitted for brevity */
+  body {
+    background: linear-gradient(135deg, #212121, #282a36 80%);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    color: #fafafa;
+    text-align: center;
+  }
+  .logo {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    width: 180px;
+    height: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+  h1 {
+    font-size: 2.5em;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #f5d86e;
+    text-shadow: 0 2px 12px #3c1a00;
+    margin-bottom: 18px;
+  }
+  .input-box, #authContainer {
+    background: #222430;
+    border-radius: 12px;
+    padding: 25px 20px 28px 20px;
+    margin: 0 auto 30px auto;
+    width: 320px;
+    box-shadow: 0 2px 18px #0005;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  input[type="text"] {
+    width: 95%;
+    padding: 13px;
+    border: none;
+    border-radius: 7px;
+    font-size: 1em;
+    background: #353749;
+    color: #efefef;
+    margin-bottom: 14px;
+    outline: none;
+  }
+  button {
+    padding: 10px 28px;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    background: linear-gradient(90deg,#f5d86e,#bb81e6 140%);
+    color: #181628;
+    font-size: 1.1em;
+    box-shadow: 0 2px 6px #bb81e630;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background: linear-gradient(90deg,#bb81e6,#f5d86e 110%);
+    color:#3c1a00;
+  }
+  #loading, #successMsg {
+    display: none;
+    font-weight: bold;
+    margin-top: 9px;
+  }
+  #loading { color: #6ee7b7; }
+  #successMsg { color: #81e6e1; }
+  #linksList {
+    max-width: 430px;
+    margin: 20px auto 0 auto;
+    text-align: left;
+    background: #242837;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 1px 10px #bb81e640;
+  }
+  .link-entry {
+    margin-bottom: 14px;
+  }
+  .link-entry a {
+    color: #bb81e6;
+    font-weight: 600;
+    font-size: 1.05em;
+    text-decoration: none;
+  }
+  .link-entry a:hover {
+    color: #f5d86e;
+    text-shadow: 0 2px 15px #f5d86e80;
+  }
+  .uploader {
+    font-size: 0.8em;
+    color: #ccc;
+  }
+  .delete-btn {
+    margin-left: 10px;
+    padding: 3px 8px;
+    font-size: 0.8em;
+    color: #fff;
+    background: #e33;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #adminBtn {
+    margin-bottom: 20px;
+    background: #aa0066;
+  }
+  @media (max-width: 600px) {
+    .input-box, #linksList, #authContainer { width: 95%; padding: 10px;}
+    .logo { width: 120px;}
+  }
+</style>
+</head>
+<body>
+
+<img src="30904b7b-84ba-4cf2-96ad-30e65b7f0369.jpg" alt="Quantria Logo" class="logo" />
+<h1>Quantria</h1>
+
+<div id="authContainer" class="input-box">
+  <button id="loginBtn" onclick="login()">Login with Google</button>
+  <button id="logoutBtn" onclick="logout()" style="display:none;">Logout</button>
+  <div id="loginStatus">Not logged in</div>
+</div>
+
+<div id="linkContainer" style="display:none;">
+  <div class="input-box">
+    <input type="text" id="linkInput" placeholder="Text, https://your-link.com" />
+    <button onclick="addLink()">Add Link</button>
+    <div id="loading">Loading...</div>
+    <div id="successMsg">Added successfully!</div>
+  </div>
+</div>
+
+<button id="adminBtn" onclick="adminLogin()">Admin Login (Delete Any Link)</button>
+
+<div id="linksList"></div>
+
+<script type="module">
+  // Import Firebase Modular SDK
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEY7gfueMhxhwz_j9WgRTA9qvzVxmoXBE",
+    authDomain: "quantria-b6fc1.firebaseapp.com",
+    projectId: "quantria-b6fc1",
+    storageBucket: "quantria-b6fc1.firebasestorage.app",
+    messagingSenderId: "552646992548",
+    appId: "1:552646992548:web:e26196a5ef2e750e453c31",
+    measurementId: "G-KYBMBZJ9FQ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const provider = new GoogleAuthProvider();
+
+  const ADMIN_PASS = "156";
+  let isAdmin = false;
+  let currentUser = null;
+
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const loginStatus = document.getElementById('loginStatus');
+  const linkContainer = document.getElementById('linkContainer');
+  const adminBtn = document.getElementById('adminBtn');
+  const linksList = document.getElementById('linksList');
+  const loading = document.getElementById('loading');
+  const successMsg = document.getElementById('successMsg');
+
+  onAuthStateChanged(auth, user => {
+    currentUser = user;
+    if(user){
+      loginStatus.textContent = `Logged in as: ${user.displayName}`;
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'inline-block';
+      linkContainer.style.display = 'block';
+      loadLinks();
+    } else {
+      loginStatus.textContent = 'Not logged in';
+      loginBtn.style.display = 'inline-block';
+      logoutBtn.style.display = 'none';
+      linkContainer.style.display = 'none';
+      linksList.innerHTML = '';
+    }
+  });
+
+  export async function login() {
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      alert(`Login failed: ${error.message}`);
+    }
+  }
+
+  export function logout() {
+    signOut(auth);
+    isAdmin = false;
+  }
+
+  export async function addLink() {
+    if(!currentUser) {
+      alert('Please login first');
+      return;
+    }
+    const val = document.getElementById('linkInput').value.trim();
+    if(!val) {
+      alert('Enter text and URL separated by a comma.');
+      return;
+    }
+    const parts = val.split(',');
+    if(parts.length < 2) {
+      alert('Enter both text and URL separated by a comma.');
+      return;
+    }
+    const text = parts[0].trim();
+    const url = parts[1].trim();
+
+    if(!/^https?:\/\/.+/.test(url)) {
+      alert('Enter valid URL starting with http or https');
+      return;
+    }
+    loading.style.display = 'block';
+    try {
+      await addDoc(collection(db, "links"), {
+        text: text,
+        url: url,
+        uid: currentUser.uid,
+        username: currentUser.displayName,
+        timestamp: serverTimestamp()
+      });
+      successMsg.style.display = 'block';
+      document.getElementById('linkInput').value = '';
+      await loadLinks();
+    } catch (error) {
+      alert(`Error adding link: ${error.message}`);
+    } finally {
+      loading.style.display = 'none';
+      setTimeout(() => { successMsg.style.display = 'none'; }, 2500);
+    }
+  }
+
+  async function loadLinks() {
+    linksList.innerHTML = '';
+    const q = query(collection(db, "links"), orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      const docId = docSnap.id;
+      const div = document.createElement('div');
+      div.className = 'link-entry';
+      div.innerHTML = `<a href="${data.url}" target="_blank">${data.text}</a><div class="uploader">Uploaded by: ${data.username || 'Unknown'}</div>`;
+
+      if(currentUser && (currentUser.uid === data.uid || isAdmin)) {
+        const delBtn = document.createElement('button');
+        delBtn.className = 'delete-btn';
+        delBtn.textContent = 'Delete';
+        delBtn.onclick = async () => {
+          try {
+            await deleteDoc(doc(db, "links", docId));
+            loadLinks();
+          } catch (error) {
+            alert(`Error deleting link: ${error.message}`);
+          }
+        };
+        div.appendChild(delBtn);
+      }
+      linksList.appendChild(div);
+    });
+  }
+
+  function adminLogin(){
+    const pass = prompt('Enter admin password:');
+    if(pass === ADMIN_PASS){
+      isAdmin = true;
+      alert('Admin access granted. You may now delete any link.');
+      loadLinks();
+    } else {
+      alert('Incorrect password.');
+    }
+  }
+
+  window.login = login;
+  window.logout = logout;
+  window.addLink = addLink;
+  window.adminLogin = adminLogin;
+</script>
+
+</body>
+</html>
